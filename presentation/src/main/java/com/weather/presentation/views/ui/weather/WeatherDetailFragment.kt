@@ -51,13 +51,13 @@ class WeatherDetailFragment : WeatherFragment() {
             binding.inclWeatherDetail.tvVientos.text = it.wind?.speed.toString()
         }
 
-        val gcd = Geocoder(context, Locale.getDefault())
+        /*val gcd = Geocoder(context, Locale.getDefault())
         val addresses: List<Address> = gcd.getFromLocation(lat, lng, 1)
         if (addresses.size > 0) {
             System.out.println(addresses[0].getLocality())
         } else {
             // do your stuff
-        }
+        }*/
 
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
