@@ -5,4 +5,5 @@ import com.weather.entities.entities.WeatherObject
 
 interface IWeatherDataSource {
     suspend fun getWeather(q: String, apikey: String): ObjectResult<WeatherObject>
+    suspend fun getCityByLatLon(lat: String, lon: String, apikey: String): ObjectResult<WeatherObject>
 }

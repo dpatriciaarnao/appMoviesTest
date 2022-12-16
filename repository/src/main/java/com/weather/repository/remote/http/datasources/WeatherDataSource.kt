@@ -25,4 +25,25 @@ class WeatherDataSource(private val weatherService: WeatherService) : IWeatherDa
             }
         }
     }
+
+    override suspend fun getCityByLatLon(
+        lat: String,
+        lon: String,
+        apikey: String
+    ): ObjectResult<WeatherObject> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = retryIO {
+                    this@WeatherDataSource.weatherService.getCityByLatLon(lat, lon, apikey)
+                }
+                if (!response.isSuccessful) {
+                    ObjectResult.Failure(Exception(response.errorBody()?.toString()))
+                } else {
+                    ObjectResult.Success(response.body()?.toWeatherResponse()!!)
+                }
+            } catch (ex: Exception) {
+                ObjectResult.Failure(ex)
+            }
+        }
+    }
 }

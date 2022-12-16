@@ -27,6 +27,9 @@ class WeatherViewModel @Inject constructor(
     private val _weatherData = MutableLiveData<WeatherObject>()
     val weatherData: LiveData<WeatherObject> = _weatherData
 
+    private val _weatherCityData = MutableLiveData<WeatherObject>()
+    val weatherCityData: LiveData<WeatherObject> = _weatherCityData
+
     fun loadDataWeatherByCity(q: String, apikey: String) {
         viewModelScope.launch {
             when (val result = weatherUseCase.getWeatherByCity(q, apikey)) {
@@ -35,6 +38,23 @@ class WeatherViewModel @Inject constructor(
                         weatherObject = result.data
                     )
                     _weatherData.value = result.data
+                }
+                is ObjectResult.Failure -> {
+                    _viewState.value = WeatherByCityViewState.LoadData.Failure(result.exception)
+                }
+                else -> {}
+            }
+        }
+    }
+
+    fun loadDataCityByLatLon(lat: String, lon: String, apikey: String) {
+        viewModelScope.launch {
+            when (val result = weatherUseCase.getCityByLatLon(lat, lon, apikey)) {
+                is ObjectResult.Success -> {
+                    _viewState.value = WeatherByCityViewState.LoadData.Success(
+                        weatherObject = result.data
+                    )
+                    _weatherCityData.value = result.data
                 }
                 is ObjectResult.Failure -> {
                     _viewState.value = WeatherByCityViewState.LoadData.Failure(result.exception)

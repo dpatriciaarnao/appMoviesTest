@@ -13,4 +13,11 @@ interface WeatherService {
         @Query("q") q: String?,
         @Query("appid") appid: String?,
     ): Response<WeatherResponse>
+
+    @GET(DynamicProperties.DEFAULT_BASE_URL)
+    suspend fun getCityByLatLon(
+        @Query("lat") lat: String?,
+        @Query("lon") lon: String?,
+        @Query("appid") appid: String?,
+    ): Response<WeatherResponse>
 }

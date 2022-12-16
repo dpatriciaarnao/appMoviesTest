@@ -13,8 +13,11 @@ class WeatherUseCase(
     private val weatherDataSource: IWeatherDataSource
 ) {
 
-    private var _result = MutableLiveData<Any>()
-    var result: MutableLiveData<Any> = _result
+    private var _resultWeather = MutableLiveData<Any>()
+    var resultWeather: MutableLiveData<Any> = _resultWeather
+
+    private var _resultCity = MutableLiveData<Any>()
+    var resultCity: MutableLiveData<Any> = _resultCity
 
     suspend fun getWeatherByCity(q: String, apikey: String): ObjectResult<WeatherObject> {
         return try {
@@ -22,7 +25,21 @@ class WeatherUseCase(
             if (result is ObjectResult.Failure && result.exception is NetworkException) {
                 return result
             } else if (result is ObjectResult.Success) {
-                _result.value = result
+                _resultWeather.value = result
+            }
+            return result
+        } catch (e: java.lang.Exception) {
+            ObjectResult.Failure(e)
+        }
+    }
+
+    suspend fun getCityByLatLon(lat: String, lon: String, apikey: String): ObjectResult<WeatherObject> {
+        return try {
+            val result = weatherDataSource.getCityByLatLon(lat, lon, apikey)
+            if (result is ObjectResult.Failure && result.exception is NetworkException) {
+                return result
+            } else if (result is ObjectResult.Success) {
+                _resultCity.value = result
             }
             return result
         } catch (e: java.lang.Exception) {
