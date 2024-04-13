@@ -1,26 +1,23 @@
-package com.weather.presentation.views.ui.weather
+package com.weather.presentation.views.ui.movies
 
-import android.location.Address
-import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
-import com.weather.presentation.views.base.WeatherFragment
-import com.weather.presentation.views.viewmodels.WeatherViewModel
+import com.weather.presentation.views.base.MovieFragment
+import com.weather.presentation.views.viewmodels.MovieViewModel
 import com.weather.repository.utils.DynamicProperties
-import com.weather.testweather.presentation.databinding.FragmentWeatherDetailBinding
+import com.weather.testweather.presentation.databinding.FragmentMovieDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 
 @AndroidEntryPoint
-class WeatherDetailFragment : WeatherFragment() {
+class MovieDetailFragment : MovieFragment() {
 
-    private lateinit var binding: FragmentWeatherDetailBinding
-    private val rootViewModel: WeatherViewModel by activityViewModels()
+    private lateinit var binding: FragmentMovieDetailBinding
+    private val rootViewModel: MovieViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,19 +33,16 @@ class WeatherDetailFragment : WeatherFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentWeatherDetailBinding.inflate(inflater, container, false)
+        binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
         initVariables()
         return binding.root
     }
 
     private fun initVariables() {
         val city = arguments?.getString(CITY_SELECTED)
-        consumeService(city ?:"Buenos Aires", DynamicProperties.API_KEY)
-        rootViewModel.weatherData.observe(viewLifecycleOwner) {
-            binding.inclWeatherDetail.tvTempActual.text = it.main?.temp.toString()
-            binding.inclWeatherDetail.tvTempMinima.text = it.main?.temp_min.toString()
-            binding.inclWeatherDetail.tvTempMaxima.text = it.main?.temp_max.toString()
-            binding.inclWeatherDetail.tvVientos.text = it.wind?.speed.toString()
+
+        rootViewModel.movieData.observe(viewLifecycleOwner) {
+
         }
 
         /*val gcd = Geocoder(context, Locale.getDefault())
@@ -62,23 +56,14 @@ class WeatherDetailFragment : WeatherFragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.inclWeatherDetail.ivBackbutton.setOnClickListener{
-            parentFragmentManager.popBackStack()
-            requireActivity().onBackPressed()
-        }
     }
-
-    private fun consumeService(q: String, apikey: String) {
-        rootViewModel.loadDataWeatherByCity(q, apikey)
-    }
-
 
 
     companion object {
         private const val CITY_SELECTED = "citySelected"
-        val TAG = WeatherDetailFragment::javaClass.name
-        fun newInstance(citySelected: String): WeatherDetailFragment =
-            WeatherDetailFragment().also {
+        val TAG = MovieDetailFragment::javaClass.name
+        fun newInstance(citySelected: String): MovieDetailFragment =
+            MovieDetailFragment().also {
                 it.arguments = Bundle().also { b -> b.putString(CITY_SELECTED, citySelected) }
             }
         }

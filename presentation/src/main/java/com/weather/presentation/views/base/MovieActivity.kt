@@ -5,14 +5,14 @@ import android.os.PersistableBundle
 import android.view.KeyEvent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.weather.presentation.views.viewmodels.WeatherViewModel
+import com.weather.presentation.views.viewmodels.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-abstract class WeatherActivity(
+abstract class MovieActivity(
 ) : AppCompatActivity() {
 
-    private val viewModel: WeatherViewModel by viewModels()
+    private val viewModel: MovieViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)

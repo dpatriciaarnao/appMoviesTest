@@ -6,13 +6,13 @@ import java.io.IOException
 
 class NetworkException(message: String) : IOException(message)
 
-data class WeatherError(override val message: String) : Exception(message)
+data class MoviesError(override val message: String) : Exception(message)
 
-fun ResponseBody?.toWeatherError(): WeatherError {
+fun ResponseBody?.toMoviesError(): MoviesError {
     return if (this == null) {
-        WeatherError("Error with empty response body")
+        MoviesError("Error with empty response body")
     } else {
         val errorBodyStr = this.string()
-        Gson().fromJson(errorBodyStr, WeatherError::class.java)
+        Gson().fromJson(errorBodyStr, MoviesError::class.java)
     }
 }

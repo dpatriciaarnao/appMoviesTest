@@ -8,7 +8,10 @@ object DynamicProperties {
 
     // default values
     const val DEFAULT_BASE_URL =
-        "https://api.openweathermap.org/data/2.5/weather/"
-    const val API_KEY = "16f308198fd7b6bc5308738df7865d69"
+        "https://api.themoviedb.org/3/movie/"
+    const val url = "popular"
+    const val API_KEY = "api_key"
+    const val VALUE_API_KEY = "e16624daa225b019d0ea3d880655eb47"
+    const val LANGUAGE =  "en-US"
 }
 

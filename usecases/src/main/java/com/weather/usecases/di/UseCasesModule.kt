@@ -1,8 +1,8 @@
 package com.weather.usecases.di
 
 import android.content.Context
-import com.weather.repository.remote.http.interfaces.IWeatherDataSource
-import com.weather.usecases.usecases.http.WeatherUseCase
+import com.weather.repository.remote.http.interfaces.IMovieDataSource
+import com.weather.usecases.usecases.http.MovieUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,11 +15,11 @@ import javax.inject.Singleton
 object UseCasesModule {
     @Singleton
     @Provides
-    fun provideWeatherUseCase(
+    fun provideMovieUseCase(
         @ApplicationContext context: Context,
-        weatherDataSource: IWeatherDataSource
-    ): WeatherUseCase = WeatherUseCase(
+        movieDataSource: IMovieDataSource
+    ): MovieUseCase = MovieUseCase(
         context,
-        weatherDataSource
+        movieDataSource
     )
 }

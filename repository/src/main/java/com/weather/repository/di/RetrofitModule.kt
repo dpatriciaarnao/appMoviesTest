@@ -1,11 +1,9 @@
 package com.weather.repository.di
 
 import android.content.Context
-import android.os.Build
-import com.sweatworks.repository.remote.http.services.ApiPrefixes
 import com.weather.repository.remote.http.interceptors.CacheInterceptor
 import com.weather.repository.remote.http.interceptors.LoggingInterceptor
-import com.weather.repository.remote.http.services.WeatherService
+import com.weather.repository.remote.http.services.MovieService
 import com.weather.repository.utils.DynamicProperties
 import com.weather.repository.utils.RepositoryConstants
 import com.weather.testweather.repository.BuildConfig
@@ -15,9 +13,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -32,8 +28,8 @@ object RetrofitModule {
     fun provideBaseUrl(@ApplicationContext context: Context) = DynamicProperties.DEFAULT_BASE_URL
 
     @Provides
-    fun provideWeatherService(retrofit: Retrofit): WeatherService =
-        retrofit.create(WeatherService::class.java)
+    fun provideMovieService(retrofit: Retrofit): MovieService =
+        retrofit.create(MovieService::class.java)
 
     @Provides
     fun provideRetrofit(@Named("baseUrl") baseUrl: String, okHttpClient: OkHttpClient): Retrofit =

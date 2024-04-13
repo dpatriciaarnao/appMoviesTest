@@ -13,7 +13,7 @@ import javax.inject.Singleton
 object AppModule {
     @Singleton
     @Provides
-    fun provideApplication(@ApplicationContext app: Context): WeatherApp {
-        return app as WeatherApp
+    fun provideApplication(@ApplicationContext app: Context): MoviesApp {
+        return app as MoviesApp
     }
 }

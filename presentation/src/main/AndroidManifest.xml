@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.weather.presentation.views.ui.weather.WelcomeWeatherActivity"
+            android:name="com.weather.presentation.views.ui.movies.MoviesNowActivity"
             android:exported="true"
             android:screenOrientation="portrait" >
         </activity>

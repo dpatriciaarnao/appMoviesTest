@@ -1,24 +1,26 @@
 package com.weather.repository.remote.http.datasources
 
 import com.weather.entities.entities.ObjectResult
-import com.weather.entities.entities.WeatherObject
-import com.weather.repository.remote.http.interfaces.IWeatherDataSource
-import com.weather.repository.remote.http.services.WeatherService
+import com.weather.entities.entities.Movie
+import com.weather.repository.remote.http.interfaces.IMovieDataSource
+import com.weather.repository.remote.http.models.responses.toMoviesResponse
+import com.weather.repository.remote.http.services.MovieService
+import com.weather.repository.utils.DynamicProperties.VALUE_API_KEY
 import com.weather.repository.utils.retryIO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class WeatherDataSource(private val weatherService: WeatherService) : IWeatherDataSource {
-    override suspend fun getWeather(q: String, apikey: String): ObjectResult<WeatherObject> {
+class MovieDataSource(private val movieService: MovieService) : IMovieDataSource {
+    override suspend fun getMovies(): ObjectResult<List<Movie>> {
         return withContext(Dispatchers.IO) {
             try {
-                val response = retryIO {
-                    this@WeatherDataSource.weatherService.getWeather(q, apikey)
-                }
+                val response = retryIO { this@MovieDataSource.movieService.getMovies(VALUE_API_KEY) }
                 if (!response.isSuccessful) {
-                    ObjectResult.Failure(Exception(response.errorBody()?.toString()))
+                    ObjectResult.Failure(Exception(response.errorBody().toString()))
                 } else {
-                    ObjectResult.Success(response.body()?.toWeatherResponse()!!)
+                    ObjectResult.Success(
+                        response.body()?.results!!.toMoviesResponse()
+                    )
                 }
             } catch (ex: Exception) {
                 ObjectResult.Failure(ex)
@@ -26,15 +28,15 @@ class WeatherDataSource(private val weatherService: WeatherService) : IWeatherDa
         }
     }
 
-    override suspend fun getCityByLatLon(
+    /*override suspend fun getCityByLatLon(
         lat: String,
         lon: String,
         apikey: String
-    ): ObjectResult<WeatherObject> {
+    ): ObjectResult<Movie> {
         return withContext(Dispatchers.IO) {
             try {
                 val response = retryIO {
-                    this@WeatherDataSource.weatherService.getCityByLatLon(lat, lon, apikey)
+                    this@MovieDataSource.weatherService.getCityByLatLon(lat, lon, apikey)
                 }
                 if (!response.isSuccessful) {
                     ObjectResult.Failure(Exception(response.errorBody()?.toString()))
@@ -45,5 +47,5 @@ class WeatherDataSource(private val weatherService: WeatherService) : IWeatherDa
                 ObjectResult.Failure(ex)
             }
         }
-    }
+    }*/
 }

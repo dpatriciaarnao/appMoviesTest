@@ -6,15 +6,15 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.databinding.DataBindingUtil
-import com.weather.presentation.views.base.WeatherActivity
-import com.weather.presentation.views.ui.weather.WelcomeWeatherActivity
+import com.weather.presentation.views.base.MovieActivity
+import com.weather.presentation.views.ui.movies.MoviesNowActivity
 import com.weather.testweather.presentation.R
 import com.weather.testweather.presentation.databinding.ActivitySplashBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
-class SplashActivity : WeatherActivity() {
+class SplashActivity : MovieActivity() {
 
     private lateinit var binding: ActivitySplashBinding
 
@@ -24,7 +24,7 @@ class SplashActivity : WeatherActivity() {
         binding.lifecycleOwner = this
 
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, WelcomeWeatherActivity::class.java)
+            val intent = Intent(this, MoviesNowActivity::class.java)
             startActivity(intent)
             finish()
         }, 3000)

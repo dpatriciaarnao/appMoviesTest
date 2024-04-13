@@ -9,7 +9,7 @@
 
         <include
             android:id="@+id/incl_weather_detail"
-            layout="@layout/weather_city_item"
+            layout="@layout/movie_detail_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
